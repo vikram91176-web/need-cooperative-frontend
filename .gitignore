@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+backend/venv/
+venv/
+__pycache__/
+*.pyc
+
+# Environment & Build Output
+.env
+dist/
+build/
+
+# Database files
+instance/
+*.db
+*.sqlite3
+
+# Antigravity system generated logs
+.system_generated/
+scratch/
+
+# IDE / OS junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.*backup*

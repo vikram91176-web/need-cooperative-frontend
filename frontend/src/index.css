@@ -1,0 +1,243 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+    background-color: #FAF8FF;
+    color: #131B2E;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  img, video, canvas, svg {
+    max-width: 100%;
+  }
+
+  ::selection {
+    background-color: #A3FFD2;
+    color: #002114;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #131B2E;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+
+  /* Material symbols helper */
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+  }
+
+  .material-symbols-filled {
+    font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+  }
+
+  input, select, textarea {
+    border-color: #BDC9C1;
+    background-color: #FFFFFF;
+    color: #131B2E;
+    transition: all 150ms ease;
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #007A55, 0 0 0 4px rgba(0, 122, 85, 0.15);
+  }
+}
+
+@layer components {
+  /* Buttons */
+  .btn {
+    @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-lg px-5 py-2.5
+      text-sm font-semibold transition-all duration-150 active:scale-[0.98];
+  }
+  .btn-primary {
+    @apply bg-primary text-on-primary shadow-sm hover:bg-primary-container hover:shadow-md;
+  }
+  .btn-secondary {
+    @apply bg-secondary-container text-on-secondary-container hover:bg-secondary hover:text-on-secondary shadow-sm;
+  }
+  .btn-outline {
+    @apply border border-outline-variant bg-surface-container-lowest text-on-surface shadow-sm hover:bg-surface-container-low hover:border-outline;
+  }
+  .btn-ghost {
+    @apply text-on-surface-variant hover:bg-surface-container hover:text-on-surface;
+  }
+  .btn-light {
+    @apply bg-surface-container-lowest text-on-surface hover:bg-surface-container-low;
+  }
+
+  /* Cards */
+  .card {
+    @apply rounded-2xl border border-outline-variant/60 bg-surface-container-lowest shadow-sm;
+    transition: box-shadow 200ms ease, transform 200ms ease;
+  }
+  .card:hover {
+    @apply shadow-md;
+  }
+
+  /* Eyebrows and Badges */
+  .eyebrow {
+    @apply font-label-caps text-label-caps uppercase tracking-[0.08em] text-primary font-bold;
+  }
+
+  /* Responsive Production Container System
+     ONE definition drives every page. Change these numbers to change the
+     whole site's content width — do not hardcode max-w-[...] in pages. */
+  .container-page,
+  .app-container {
+    @apply mx-auto w-full max-w-[1440px] 2xl:max-w-[1680px] 3xl:max-w-[1840px]
+           px-4 sm:px-6 lg:px-8 2xl:px-10;
+  }
+
+  /* Narrower measure for long-form paragraphs, so body text stays readable
+     even though the page container is wide. */
+  .container-prose {
+    @apply mx-auto w-full max-w-[46rem];
+  }
+
+  .surface-band {
+    @apply border-y border-outline-variant/60 bg-surface-container-low/70;
+  }
+
+  .dashboard-shell {
+    @apply container-page py-6 sm:py-8 2xl:py-10;
+  }
+
+  /* Section vertical rhythm. Tighter than before at small/medium widths so
+     pages read dense rather than stretched, opening up only on large screens
+     where there is genuinely more room. */
+  .section-y {
+    @apply py-12 lg:py-16 2xl:py-20;
+  }
+
+  .section-y-tight {
+    @apply py-8 lg:py-12 2xl:py-14;
+  }
+
+  /* Form controls */
+  .field-label {
+    @apply mb-1.5 block text-xs font-semibold text-on-surface;
+  }
+
+  .field-control {
+    @apply w-full rounded-lg border border-outline-variant bg-surface-container-lowest px-3.5 py-2.5 text-sm text-on-surface
+           placeholder:text-outline focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20;
+  }
+
+  /* Tab strip */
+  .tab-strip {
+    @apply flex gap-1 overflow-x-auto border-b border-outline-variant/60;
+  }
+
+  .tab-strip > button {
+    @apply shrink-0 border-b-2 border-transparent px-4 py-3 text-sm font-semibold text-on-surface-variant transition-colors hover:text-on-surface;
+  }
+
+  .tab-strip > button[aria-selected='true'],
+  .tab-strip > button.active {
+    @apply border-primary text-primary font-bold;
+  }
+
+  /* Physical Credential Header Strip */
+  .credential-strip {
+    @apply bg-inverse-surface text-inverse-on-surface px-5 py-2.5 flex items-center justify-between text-xs;
+  }
+}
+
+/* Modal overlays */
+.fixed.inset-0.z-50 {
+  background-color: rgba(19, 27, 46, 0.65);
+  backdrop-filter: blur(4px);
+}
+
+.fixed.inset-0.z-50 > .card,
+.fixed.inset-0.z-50 > div {
+  border-radius: 1.25rem;
+  border-color: rgba(189, 201, 193, 0.8);
+  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.16), 0 8px 10px -6px rgba(15, 23, 42, 0.08);
+}
+
+/* Scrollbar styles */
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Animations */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes stampIn {
+  0% {
+    opacity: 0;
+    transform: scale(1.35) rotate(-16deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.94) rotate(-6deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-7deg);
+  }
+}
+
+.stamp-in {
+  animation: stampIn 0.5s ease-out 0.75s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .stamp-in {
+    animation: none !important;
+    opacity: 1;
+  }
+  .stamp-in {
+    transform: rotate(-7deg);
+  }
+}
