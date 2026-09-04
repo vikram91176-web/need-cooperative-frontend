@@ -34,7 +34,6 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 # database files — and the one without looked like the app had lost all its
 # data, with no error to explain why. Both now resolve to the same file.
 DEFAULT_DB_PATH = os.path.join(BASE_DIR, "instance", "database.db")
-os.makedirs(os.path.dirname(DEFAULT_DB_PATH), exist_ok=True)
 
 
 def create_app():
@@ -45,9 +44,19 @@ def create_app():
     # Secrets and settings come from .env, never hardcoded.
     # The second argument to os.getenv is the fallback used in development.
     app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev-secret-change-me")
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
-        "DATABASE_URL", f"sqlite:///{DEFAULT_DB_PATH}"
-    )
+    database_url = os.getenv("DATABASE_URL")
+    if database_url:
+        # Normalize postgres:// to postgresql:// for SQLAlchemy compatibility
+        if database_url.startswith("postgres://"):
+            database_url = database_url.replace("postgres://", "postgresql://", 1)
+        app.config["SQLALCHEMY_DATABASE_URI"] = database_url
+    else:
+        # Local development fallback: SQLite in backend/instance/database.db
+        try:
+            os.makedirs(os.path.dirname(DEFAULT_DB_PATH), exist_ok=True)
+        except OSError:
+            pass
+        app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DEFAULT_DB_PATH}"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     # --- Session -----------------------------------------------------------
